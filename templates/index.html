@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #video-container {
+            margin-top: 20px;
+        }
+
+        #video-feed {
+            width: 480px;
+            height: 360px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .start-button, .stop-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .stop-button {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <h1>Emotion Detection</h1>
+
+    <div id="video-container">
+        <img id="video-feed" alt="Video Feed" src="{{ url_for('video_feed') }}">
+        <div class="button-container">
+            <button class="start-button" onclick="startCamera()">Start Camera</button>
+            <button class="stop-button" onclick="stopCamera()">Stop Camera</button>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video-feed');
+        let isCameraOn = false;
+    
+        const startCamera = () => {
+            isCameraOn = true;
+            updateButtonLabel();
+            video.src = "{{ url_for('video_feed') }}";
+        };
+    
+        const stopCamera = () => {
+            isCameraOn = false;
+            updateButtonLabel();
+            video.src = ""; // Set an empty source to stop the video feed
+        };
+    
+        const updateButtonLabel = () => {
+            document.querySelector('.start-button').disabled = isCameraOn;
+            document.querySelector('.stop-button').disabled = !isCameraOn;
+        };
+    </script>
+    
+</body>
+</html>
